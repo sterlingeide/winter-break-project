@@ -1,18 +1,8 @@
 import React, { Component } from 'react';
-import './InstaAlbum.css';
-import Character from './Character';
-import axios from'axios';
+import './Landing.css';
+import LandingAnime from './LandingAnime';
 
-// axios.get('https://api.jikan.moe/v3/top/characters')
-// .then(response => {
-//     console.log('Characters', response.data);
-// })
-// .catch(error => {
-//     console.log(error);
-// });
-
-
-const characterList = [
+const animeList = [
     {
         title: 'Fullmetal Alchemist',
         creator: 'Shō Aikawa',
@@ -105,9 +95,9 @@ const characterList = [
     }
 ]
 
-const displayCharacterList = characterList.map((c, idx) => {
+const displayAnimeList = animeList.map((c, idx) => {
     return (
-        <Character 
+        <LandingAnime 
             key={idx} 
             title={c.title} 
             creator={c.creator} 
@@ -121,96 +111,60 @@ const displayCharacterList = characterList.map((c, idx) => {
 })
 
 
-class CharacterContainer extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            data: []
-        };
-    }
-
-    componentDidMount(){
-        axios.get('https://api.jikan.moe/v3/top/anime')
-        .then((response) => {
-            console.log(response.data);
-            this.setState({
-                data: response.data.top
-            });
-        })
-        .catch((error) => {
-            console.log('ERROR', error);
-        })
-    }
-
-    displayAnimes() {
-    const display = this.state.data.map((a, idx) => {
-        return <Character
-        key={idx}
-        title={a.title}
-        creator={a.members}
-        caption={a.title}
-        user={'Rome Bell'}
-        tags={[a.type, a.type]}
-        date={a.start_date}
-        imageUrl={a.image_url}
-      />
-    });
-
-    return display;
-  }
-
+class Landing extends Component {
     render() {
         return (
             <div>
-                <div className="navbar is-inline-flex is-transparent">
-                    <div className="navbar-brand">
-                        <a className="navbar-item">
-                            <img src="https://bulma.io/images/bulma-logo.png" width="112" height="28" alt="Bulma" />
-                        </a>
-                    </div>
-                    <div className="navbar-menu">
-                        <div className="navbar-item">
-                            <div className="control has-icons-left">
-                                <input className="input is-small has-text-centered" type="text" placeholder="search" />
-                                <span className="icon is-left is-small">
-                                    <i className="material-icons">search</i>
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="navbar-item is-flex-touch">
-                        <a className="navbar-item">
-                            <i className="material-icons">explore</i>
-                        </a>
-                        <a className="navbar-item">
-                            <i className="material-icons">favorite_border</i>
-                        </a>
-                        <a className="navbar-item">
-                            <i className="material-icons">person_outline</i>
-                        </a>
-                    </div>
-                </div>
-                <div className="columns body-columns">
-                    <div className="column is-half is-offset-one-quarter">
-                        {/* {displayCharacterList} */}
-                        {this.displayAnimes()}
-                        <footer className="footer">
-                            <div className="container is-fluid">
-                                <div className="content has-text-centered">
-                                    <p>
-                                        <strong>Bulma</strong> by
-                                        <a href="http://jgthms.com">Jeremy Thomas</a>. The source code is licensed
-                                        <a href="http://opensource.org/licenses/mit-license.php">MIT</a>. The website content is licensed
-                                        <a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY NC SA 4.0</a>.
-                                    </p>
+                <section className="hero is-info is-fullheight">
+                    <div className="hero-head">
+                        <nav className="navbar">
+                            <div className="container">
+                                <div className="navbar-brand">
+                                    <a className="navbar-item" href="../">
+                                        <img src="http://bulma.io/images/bulma-type-white.png" alt="Logo"/>
+                                    </a>
+                                    <span className="navbar-burger burger" data-target="navbarMenu">
+                                        <span></span>
+                                        <span></span>
+                                        <span></span>
+                                    </span>
+                                </div>
+                                <div id="navbarMenu" className="navbar-menu">
+                                    <div className="navbar-end">
+                                        <span className="navbar-item">
+                                            <a className="button is-white is-outlined" href="/">
+                                                <span className="icon">
+                                                    <i className="fa fa-home"></i>
+                                                </span>
+                                                <span>Home</span>
+                                            </a>
+                                        </span>
+                                        <span className="navbar-item">
+                                            <a className="button is-white is-outlined" href="/about">
+                                                <span className="icon">
+                                                    <i className="fa fa-superpowers"></i>
+                                                </span>
+                                                <span>About</span>
+                                            </a>
+                                        </span>
+                                        <span className="navbar-item">
+                                            <a className="button is-white is-outlined" href="/characters">
+                                                <span className="icon">
+                                                    <i className="fa fa-book"></i>
+                                                </span>
+                                                <span>Characters</span>
+                                            </a>
+                                        </span>
+                                    </div>
                                 </div>
                             </div>
-                        </footer>
+                        </nav>
                     </div>
-                </div>
+                    {displayAnimeList}
+                </section>
             </div>
         );
     }
 }
 
-export default CharacterContainer;
+export default Landing;
